@@ -171,17 +171,6 @@ Dux filter              5.02 GB - 675602.98x memory usage +5.02 GB
 ### Explorer Versus Dux eager computing
 
 ```
-Error trying to determine erlang version enoent, falling back to overall OTP version
-Warning: the benchmark Dux filter is using an evaluated function.
-  Evaluated functions perform slower than compiled functions.
-  You can move the Benchee caller to a function in a module and invoke `Mod.fun()` instead.
-  Alternatively, you can move the benchmark into a benchmark.exs file and run mix run benchmark.exs
-
-Warning: the benchmark Explorer filter is using an evaluated function.
-  Evaluated functions perform slower than compiled functions.
-  You can move the Benchee caller to a function in a module and invoke `Mod.fun()` instead.
-  Alternatively, you can move the benchmark into a benchmark.exs file and run mix run benchmark.exs
-
 Operating System: macOS
 CPU Information: Apple M3 Max
 Number of Available Cores: 14
