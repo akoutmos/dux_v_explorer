@@ -143,25 +143,25 @@ inputs: Extra-large data set
 Estimated total run time: 12 s
 Excluding outliers: false
 
-Benchmarking Dux filter with input Extra-large data set ...
-Benchmarking Explorer filter with input Extra-large data set ...
+Benchmarking Dux mutation with input Extra-large data set ...
+Benchmarking Explorer mutation with input Extra-large data set ...
 Calculating statistics...
 Formatting results...
 
 ##### With input Extra-large data set #####
 Name                      ips        average  deviation         median         99th %
-Explorer filter         62.27       0.0161 s    ±62.79%       0.0138 s       0.0806 s
-Dux filter              0.116         8.59 s     ±0.00%         8.59 s         8.59 s
+Explorer mutation         62.27       0.0161 s    ±62.79%       0.0138 s       0.0806 s
+Dux mutation              0.116         8.59 s     ±0.00%         8.59 s         8.59 s
 
 Comparison:
-Explorer filter         62.27
-Dux filter              0.116 - 534.78x slower +8.57 s
+Explorer mutation         62.27
+Dux mutation              0.116 - 534.78x slower +8.57 s
 
 Memory usage statistics:
 
 Name               Memory usage
-Explorer filter      0.00001 GB
-Dux filter              5.02 GB - 675602.98x memory usage +5.02 GB
+Explorer mutation      0.00001 GB
+Dux mutation              5.02 GB - 675602.98x memory usage +5.02 GB
 
 **All measurements for memory usage were the same**
 ```
@@ -189,25 +189,25 @@ inputs: Extra-large data set
 Estimated total run time: 12 s
 Excluding outliers: false
 
-Benchmarking Dux filter with input Extra-large data set ...
-Benchmarking Explorer filter with input Extra-large data set ...
+Benchmarking Dux mutation with input Extra-large data set ...
+Benchmarking Explorer mutation with input Extra-large data set ...
 Calculating statistics...
 Formatting results...
 
 ##### With input Extra-large data set #####
 Name                      ips        average  deviation         median         99th %
-Explorer filter         68.88       14.52 ms    ±11.04%       14.62 ms       19.25 ms
-Dux filter               1.12      894.25 ms     ±1.15%      889.88 ms      905.95 ms
+Explorer mutation         68.88       14.52 ms    ±11.04%       14.62 ms       19.25 ms
+Dux mutation               1.12      894.25 ms     ±1.15%      889.88 ms      905.95 ms
 
 Comparison:
-Explorer filter         68.88
-Dux filter               1.12 - 61.59x slower +879.73 ms
+Explorer mutation         68.88
+Dux mutation               1.12 - 61.59x slower +879.73 ms
 
 Memory usage statistics:
 
 Name               Memory usage
-Explorer filter      0.00761 MB
-Dux filter             28.44 MB - 3738.73x memory usage +28.43 MB
+Explorer mutation      0.00761 MB
+Dux mutation             28.44 MB - 3738.73x memory usage +28.43 MB
 
 **All measurements for memory usage were the same**
 ```

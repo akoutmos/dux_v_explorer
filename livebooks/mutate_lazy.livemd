@@ -69,9 +69,9 @@ IO.puts("Generating Explorer DataFrames")
       )
 
     time = time / 1_000.0
-    
+
     IO.puts("Time to process #{length(data_set)} entries: #{time}ms")
-    
+
     value
   end)
 ```
@@ -123,12 +123,12 @@ n_rows = Dux.Backend.table_n_rows(conn, table_ref)
 ```elixir
 Benchee.run(
   %{
-    "Explorer filter" => fn {series, _} ->
+    "Explorer mutation" => fn {series, _} ->
       DataFrame.mutate(series, revenue: quantity * price)
     end,
-    "Dux filter" => fn {_, series} ->
-      series 
-      |> Dux.mutate(revenue: quantity * price) 
+    "Dux mutation" => fn {_, series} ->
+      series
+      |> Dux.mutate(revenue: quantity * price)
       |> Dux.compute()
     end
   },
