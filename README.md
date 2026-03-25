@@ -28,8 +28,6 @@ This test simply filters on 2 columns.
 
 ### Explorer Versus Dux lazy computing
 
-Running Benchee test to filter results:
-
 ```
 Operating System: macOS
 CPU Information: Apple M3 Max
@@ -72,13 +70,9 @@ Dux filter              5.01 GB - 617413.52x memory usage +5.01 GB
 **All measurements for memory usage were the same**
 ```
 
-Iterations per second chart of lazy Dux versus Explorer:
-
-![Lazy load Dux versus Explorer](./images/lazy_filter.png)
+![Explorer versus lazy load Dux](./images/filter_lazy.png)
 
 ### Dux eager computing versus Explorer
-
-Running Benchee test to filter results:
 
 ```
 Operating System: macOS
@@ -122,6 +116,111 @@ Dux filter             23.90 MB - 2873.92x memory usage +23.89 MB
 **All measurements for memory usage were the same**
 ```
 
-Iterations per second chart of eager Dux versus Explorer:
+![Eager load Dux versus Explorer](./images/filter_eager.png)
 
-![Eager load Dux versus Explorer](./images/eager_filter.png)
+## Mutatinging data
+
+This test mutates the data frame by creating a new column based off of two existing columns.
+
+### Explorer Versus Dux lazy computing
+
+```
+Operating System: macOS
+CPU Information: Apple M3 Max
+Number of Available Cores: 14
+Available memory: 36 GB
+Elixir 1.19.3
+Erlang 28
+JIT enabled: true
+
+Benchmark suite executing with the following configuration:
+warmup: 2 s
+time: 2 s
+memory time: 2 s
+reduction time: 0 ns
+parallel: 1
+inputs: Extra-large data set
+Estimated total run time: 12 s
+Excluding outliers: false
+
+Benchmarking Dux filter with input Extra-large data set ...
+Benchmarking Explorer filter with input Extra-large data set ...
+Calculating statistics...
+Formatting results...
+
+##### With input Extra-large data set #####
+Name                      ips        average  deviation         median         99th %
+Explorer filter         62.27       0.0161 s    ±62.79%       0.0138 s       0.0806 s
+Dux filter              0.116         8.59 s     ±0.00%         8.59 s         8.59 s
+
+Comparison:
+Explorer filter         62.27
+Dux filter              0.116 - 534.78x slower +8.57 s
+
+Memory usage statistics:
+
+Name               Memory usage
+Explorer filter      0.00001 GB
+Dux filter              5.02 GB - 675602.98x memory usage +5.02 GB
+
+**All measurements for memory usage were the same**
+```
+
+![Explorer versus lazy load Dux](./images/mutate_lazy.png)
+
+### Explorer Versus Dux eager computing
+
+```
+Error trying to determine erlang version enoent, falling back to overall OTP version
+Warning: the benchmark Dux filter is using an evaluated function.
+  Evaluated functions perform slower than compiled functions.
+  You can move the Benchee caller to a function in a module and invoke `Mod.fun()` instead.
+  Alternatively, you can move the benchmark into a benchmark.exs file and run mix run benchmark.exs
+
+Warning: the benchmark Explorer filter is using an evaluated function.
+  Evaluated functions perform slower than compiled functions.
+  You can move the Benchee caller to a function in a module and invoke `Mod.fun()` instead.
+  Alternatively, you can move the benchmark into a benchmark.exs file and run mix run benchmark.exs
+
+Operating System: macOS
+CPU Information: Apple M3 Max
+Number of Available Cores: 14
+Available memory: 36 GB
+Elixir 1.19.3
+Erlang 28
+JIT enabled: true
+
+Benchmark suite executing with the following configuration:
+warmup: 2 s
+time: 2 s
+memory time: 2 s
+reduction time: 0 ns
+parallel: 1
+inputs: Extra-large data set
+Estimated total run time: 12 s
+Excluding outliers: false
+
+Benchmarking Dux filter with input Extra-large data set ...
+Benchmarking Explorer filter with input Extra-large data set ...
+Calculating statistics...
+Formatting results...
+
+##### With input Extra-large data set #####
+Name                      ips        average  deviation         median         99th %
+Explorer filter         68.88       14.52 ms    ±11.04%       14.62 ms       19.25 ms
+Dux filter               1.12      894.25 ms     ±1.15%      889.88 ms      905.95 ms
+
+Comparison:
+Explorer filter         68.88
+Dux filter               1.12 - 61.59x slower +879.73 ms
+
+Memory usage statistics:
+
+Name               Memory usage
+Explorer filter      0.00761 MB
+Dux filter             28.44 MB - 3738.73x memory usage +28.43 MB
+
+**All measurements for memory usage were the same**
+```
+
+![Explorer versus eager load Dux](./images/mutate_eager.png)
