@@ -1,0 +1,147 @@
+# Benchmarking Eager Filtering
+
+```elixir
+Mix.install([
+  :dux,
+  :explorer,
+  :benchee,
+  :kino_benchee,
+  :kino
+])
+```
+
+## Helpers
+
+```elixir
+require Explorer.DataFrame
+require Dux
+
+alias Explorer.DataFrame
+```
+
+## Data Generator
+
+```elixir
+defmodule Data do
+  @regions ~w(North South East West Central)
+  @products ~w(Widget Gadget Doohickey Thingamajig Gizmo)
+
+  def gen(num_rows) do
+    month = String.pad_leading("#{:rand.uniform(12)}", 2, "0")
+    day = String.pad_leading("#{:rand.uniform(28)}", 2, "0")
+
+    1..num_rows
+    |> Enum.map(fn _ ->
+      %{
+        region: Enum.random(@regions),
+        product: Enum.random(@products),
+        quantity: :rand.uniform(100),
+        price: Float.round(:rand.uniform() * 500, 2),
+        date: Date.from_iso8601!("2025-#{month}-#{day}")
+      }
+    end)
+  end
+end
+```
+
+## Init test data
+
+```elixir
+sm_data_set = Data.gen(1_000)
+md_data_set = Data.gen(100_000)
+lg_data_set = Data.gen(1_000_000)
+xl_data_set = Data.gen(10_000_000)
+
+:ok
+```
+
+```elixir
+IO.puts("Generating Explorer DataFrames")
+
+[sm_df, md_df, lg_df, xl_df] =
+  [sm_data_set, md_data_set, lg_data_set, xl_data_set]
+  |> Enum.map(fn data_set ->
+    {time, value} =
+      :timer.tc(
+        fn ->
+          DataFrame.new(data_set)
+        end
+      )
+
+    time = time / 1_000.0
+
+    IO.puts("Time to process #{length(data_set)} entries: #{time}ms")
+
+    value
+  end)
+```
+
+```elixir
+IO.puts("Generating Dux")
+
+[sm_dux, md_dux, lg_dux, xl_dux] =
+  [sm_data_set, md_data_set, lg_data_set, xl_data_set]
+  |> Enum.map(fn data_set ->
+    {time, value} =
+      :timer.tc(fn ->
+        data_set
+        |> Dux.from_list()
+        |> Dux.compute()
+      end)
+
+    time = time / 1_000.0
+
+    IO.puts("Time to process #{length(data_set)} entries: #{time}ms")
+
+    value
+  end)
+```
+
+## Benchmark
+
+```elixir
+# Check the shape to ensure the correct number of results
+{df_entries, _} =
+  xl_df
+  |> DataFrame.filter(quantity > 50 and price > 100.0)
+  |> DataFrame.shape()
+
+df_entries
+```
+
+```elixir
+# Check the shape to ensure the correct number of results
+filtered_xl_table =
+  xl_dux
+  |> Dux.filter(quantity > 50 and price > 100.0)
+  |> Dux.compute()
+
+%Dux{source: {:table, table_ref}} = filtered_xl_table
+conn = Dux.Connection.get_conn()
+names = Dux.Backend.table_names(conn, table_ref)
+n_rows = Dux.Backend.table_n_rows(conn, table_ref)
+```
+
+```elixir
+Benchee.run(
+  %{
+    "Explorer filter" => fn {series, _} ->
+      DataFrame.filter(series, quantity > 50 and price > 100.0)
+    end,
+    "Dux filter" => fn {_, series} ->
+      series
+      |> Dux.filter(quantity > 50 and price > 100.0)
+      |> Dux.compute()
+    end
+  },
+  inputs: %{
+    # "Small data set" => {sm_df, sm_dux},
+    # "Medium data set" => {md_df, md_dux},
+    # "Large data set" => {lg_df, lg_dux},
+    "Extra-large data set" => {xl_df, xl_dux}
+  },
+  warmup: 2,
+  time: 2,
+  memory_time: 2
+)
+```

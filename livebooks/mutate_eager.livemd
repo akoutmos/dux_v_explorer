@@ -1,4 +1,4 @@
-# Benchmarking In-Memory Filtering
+# Benchmarking Eager Mutations
 
 ```elixir
 Mix.install([
@@ -126,11 +126,11 @@ n_rows = Dux.Backend.table_n_rows(conn, table_ref)
 Benchee.run(
   %{
     "Explorer filter" => fn {series, _} ->
-      DataFrame.filter(series, quantity > 50 and price > 100.0)
+      DataFrame.mutate(series, revenue: quantity * price)
     end,
     "Dux filter" => fn {_, series} ->
-      series
-      |> Dux.filter(quantity > 50 and price > 100.0)
+      series 
+      |> Dux.mutate(revenue: quantity * price) 
       |> Dux.compute()
     end
   },

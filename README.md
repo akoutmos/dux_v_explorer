@@ -1,30 +1,32 @@
 # Performance Comparison Between Dux and Explorer
 
-## Filtering data
-
-This test simply filters on 2 columns.
-
-### Dux lazy computing versus Explorer
+## Loading data into Explorer and Dux
 
 Generating Explorer DataFrame:
 
 ```
 Generating Explorer DataFrames
-Time to process 1000 entries: 5347.453ms
-Time to process 100000 entries: 80.417ms
-Time to process 1000000 entries: 925.207ms
-Time to process 10000000 entries: 4063.543ms
+Time to process 1000 entries: 0.541ms
+Time to process 100000 entries: 75.697ms
+Time to process 1000000 entries: 921.536ms
+Time to process 10000000 entries: 8692.442ms
 ```
 
 Generating Dux DataFrame:
 
 ```
 Generating Dux
-Time to process 1000 entries: 0.005ms
-Time to process 100000 entries: 0.0ms
-Time to process 1000000 entries: 0.0ms
-Time to process 10000000 entries: 0.0ms
+Time to process 1000 entries: 3.445ms
+Time to process 100000 entries: 1293.172ms
+Time to process 1000000 entries: 3531.815ms
+Time to process 10000000 entries: 12902.952ms
 ```
+
+## Filtering data
+
+This test simply filters on 2 columns.
+
+### Explorer Versus Dux lazy computing
 
 Running Benchee test to filter results:
 
@@ -75,26 +77,6 @@ Iterations per second chart of lazy Dux versus Explorer:
 ![Lazy load Dux versus Explorer](./images/lazy_filter.png)
 
 ### Dux eager computing versus Explorer
-
-Generating Explorer DataFrame:
-
-```
-Generating Explorer DataFrames
-Time to process 1000 entries: 0.541ms
-Time to process 100000 entries: 75.697ms
-Time to process 1000000 entries: 921.536ms
-Time to process 10000000 entries: 8692.442ms
-```
-
-Generating Dux DataFrame:
-
-```
-Generating Dux
-Time to process 1000 entries: 3.445ms
-Time to process 100000 entries: 1293.172ms
-Time to process 1000000 entries: 3531.815ms
-Time to process 10000000 entries: 12902.952ms
-```
 
 Running Benchee test to filter results:
 
