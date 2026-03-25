@@ -213,3 +213,99 @@ Dux mutation             28.44 MB - 3738.73x memory usage +28.43 MB
 ```
 
 ![Explorer versus eager load Dux](./images/mutation_eager.png)
+
+## Summarizing data
+
+This test groups and summarizes data from a dataset.
+
+### Explorer Versus Dux lazy computing
+
+```
+Operating System: macOS
+CPU Information: Apple M3 Max
+Number of Available Cores: 14
+Available memory: 36 GB
+Elixir 1.19.3
+Erlang 28
+JIT enabled: true
+
+Benchmark suite executing with the following configuration:
+warmup: 2 s
+time: 2 s
+memory time: 2 s
+reduction time: 0 ns
+parallel: 1
+inputs: Extra-large data set
+Estimated total run time: 12 s
+Excluding outliers: false
+
+Benchmarking Dux summary with input Extra-large data set ...
+Benchmarking Explorer summary with input Extra-large data set ...
+Calculating statistics...
+Formatting results...
+
+##### With input Extra-large data set #####
+Name                       ips        average  deviation         median         99th %
+Explorer summary         46.50       0.0215 s    ±20.38%       0.0210 s       0.0571 s
+Dux summary              0.138         7.26 s     ±0.00%         7.26 s         7.26 s
+
+Comparison:
+Explorer summary         46.50
+Dux summary              0.138 - 337.63x slower +7.24 s
+
+Memory usage statistics:
+
+Name                Memory usage
+Explorer summary      0.00001 GB
+Dux summary              4.99 GB - 570568.41x memory usage +4.99 GB
+
+**All measurements for memory usage were the same**
+```
+
+![Explorer versus lazy load Dux](./images/summary_lazy.png)
+
+### Dux eager computing versus Explorer
+
+```
+Operating System: macOS
+CPU Information: Apple M3 Max
+Number of Available Cores: 14
+Available memory: 36 GB
+Elixir 1.19.3
+Erlang 28
+JIT enabled: true
+
+Benchmark suite executing with the following configuration:
+warmup: 2 s
+time: 2 s
+memory time: 2 s
+reduction time: 0 ns
+parallel: 1
+inputs: Extra-large data set
+Estimated total run time: 12 s
+Excluding outliers: false
+
+Benchmarking Dux summary with input Extra-large data set ...
+Benchmarking Explorer summar with input Extra-large data set ...
+Calculating statistics...
+Formatting results...
+
+##### With input Extra-large data set #####
+Name                      ips        average  deviation         median         99th %
+Explorer summar         50.63       19.75 ms     ±6.08%       19.82 ms       23.64 ms
+Dux summary             32.38       30.89 ms     ±6.18%       30.38 ms       37.84 ms
+
+Comparison:
+Explorer summar         50.63
+Dux summary             32.38 - 1.56x slower +11.14 ms
+
+Memory usage statistics:
+
+Name               Memory usage
+Explorer summar         9.17 KB
+Dux summary            43.41 KB - 4.73x memory usage +34.24 KB
+
+**All measurements for memory usage were the same**
+```
+
+![Eager load Dux versus Explorer](./images/eager_eager.png)
