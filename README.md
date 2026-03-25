@@ -166,7 +166,7 @@ Dux filter              5.02 GB - 675602.98x memory usage +5.02 GB
 **All measurements for memory usage were the same**
 ```
 
-![Explorer versus lazy load Dux](./images/mutate_lazy.png)
+![Explorer versus lazy load Dux](./images/mutation_lazy.png)
 
 ### Explorer Versus Dux eager computing
 
@@ -223,4 +223,4 @@ Dux filter             28.44 MB - 3738.73x memory usage +28.43 MB
 **All measurements for memory usage were the same**
 ```
 
-![Explorer versus eager load Dux](./images/mutate_eager.png)
+![Explorer versus eager load Dux](./images/mutation_eager.png)
