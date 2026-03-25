@@ -308,4 +308,4 @@ Dux summary            43.41 KB - 4.73x memory usage +34.24 KB
 **All measurements for memory usage were the same**
 ```
 
-![Eager load Dux versus Explorer](./images/eager_eager.png)
+![Eager load Dux versus Explorer](./images/summary_eager.png)
