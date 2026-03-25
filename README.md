@@ -1,0 +1,145 @@
+# Performance Comparison Between Dux and Explorer
+
+## Filtering data
+
+This test simply filters on 2 columns.
+
+### Dux lazy computing versus Explorer
+
+Generating Explorer DataFrame:
+
+```
+Generating Explorer DataFrames
+Time to process 1000 entries: 5347.453ms
+Time to process 100000 entries: 80.417ms
+Time to process 1000000 entries: 925.207ms
+Time to process 10000000 entries: 4063.543ms
+```
+
+Generating Dux DataFrame:
+
+```
+Generating Dux
+Time to process 1000 entries: 0.005ms
+Time to process 100000 entries: 0.0ms
+Time to process 1000000 entries: 0.0ms
+Time to process 10000000 entries: 0.0ms
+```
+
+Running Benchee test to filter results:
+
+```
+Operating System: macOS
+CPU Information: Apple M3 Max
+Number of Available Cores: 14
+Available memory: 36 GB
+Elixir 1.19.3
+Erlang 28
+JIT enabled: true
+
+Benchmark suite executing with the following configuration:
+warmup: 2 s
+time: 2 s
+memory time: 2 s
+reduction time: 0 ns
+parallel: 1
+inputs: Extra-large data set
+Estimated total run time: 12 s
+Excluding outliers: false
+
+Benchmarking Dux filter with input Extra-large data set ...
+Benchmarking Explorer filter with input Extra-large data set ...
+Calculating statistics...
+Formatting results...
+
+##### With input Extra-large data set #####
+Name                      ips        average  deviation         median         99th %
+Explorer filter         42.69       0.0234 s    ±35.16%       0.0223 s       0.0385 s
+Dux filter              0.117         8.53 s     ±0.00%         8.53 s         8.53 s
+
+Comparison:
+Explorer filter         42.69
+Dux filter              0.117 - 364.30x slower +8.51 s
+
+Memory usage statistics:
+
+Name               Memory usage
+Explorer filter      0.00001 GB
+Dux filter              5.01 GB - 617413.52x memory usage +5.01 GB
+
+**All measurements for memory usage were the same**
+```
+
+Iterations per second chart of lazy Dux versus Explorer:
+
+![Lazy load Dux versus Explorer](./images/lazy_filter.png)
+
+### Dux eager computing versus Explorer
+
+Generating Explorer DataFrame:
+
+```
+Generating Explorer DataFrames
+Time to process 1000 entries: 0.541ms
+Time to process 100000 entries: 75.697ms
+Time to process 1000000 entries: 921.536ms
+Time to process 10000000 entries: 8692.442ms
+```
+
+Generating Dux DataFrame:
+
+```
+Generating Dux
+Time to process 1000 entries: 3.445ms
+Time to process 100000 entries: 1293.172ms
+Time to process 1000000 entries: 3531.815ms
+Time to process 10000000 entries: 12902.952ms
+```
+
+Running Benchee test to filter results:
+
+```
+Operating System: macOS
+CPU Information: Apple M3 Max
+Number of Available Cores: 14
+Available memory: 36 GB
+Elixir 1.19.3
+Erlang 28
+JIT enabled: true
+
+Benchmark suite executing with the following configuration:
+warmup: 2 s
+time: 2 s
+memory time: 2 s
+reduction time: 0 ns
+parallel: 1
+inputs: Extra-large data set
+Estimated total run time: 12 s
+Excluding outliers: false
+
+Benchmarking Dux filter with input Extra-large data set ...
+Benchmarking Explorer filter with input Extra-large data set ...
+Calculating statistics...
+Formatting results...
+
+##### With input Extra-large data set #####
+Name                      ips        average  deviation         median         99th %
+Explorer filter         43.00       23.25 ms    ±21.83%       23.49 ms       36.51 ms
+Dux filter               1.15      871.03 ms     ±1.70%      878.11 ms      881.01 ms
+
+Comparison:
+Explorer filter         43.00
+Dux filter               1.15 - 37.46x slower +847.78 ms
+
+Memory usage statistics:
+
+Name               Memory usage
+Explorer filter      0.00832 MB
+Dux filter             23.90 MB - 2873.92x memory usage +23.89 MB
+
+**All measurements for memory usage were the same**
+```
+
+Iterations per second chart of eager Dux versus Explorer:
+
+![Eager load Dux versus Explorer](./images/eager_filter.png)
